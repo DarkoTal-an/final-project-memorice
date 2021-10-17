@@ -1,5 +1,5 @@
 import React from 'react';
-import {useState} from "react";
+import {useState, useEffect} from "react";
 import "./App.css";
 import Main from "./components/Main.jsx";
 import Sidebar from "./components/Sidebar.jsx";
@@ -8,8 +8,15 @@ import uuid from "react-uuid";
 
 function App() {
 
-  const [notes, setNotes] = useState([]);
+  const [notes, setNotes] = useState(
+    localStorage.notes ? JSON.parse(localStorage.notes) : []
+  ); // ON REFRESH/LOAD either an empty arras or the all saved data from the storage
   const [activeNote, setActiveNote] = useState(false); // activeNote is false there when notes are EMPTY...no activeNote!!! Main.jsx****
+
+  useEffect(() => {
+    localStorage.setItem("notes",JSON.stringify(notes));
+
+  }, [notes]);
 
   const onNoteAdd = () => {
     const newNote = {
@@ -33,6 +40,7 @@ function App() {
     });
 
     setNotes(updatedNotesArray);
+    console.log(updatedNotesArray);
   };
 
   // deleting a note
@@ -57,7 +65,8 @@ function App() {
        setActiveNote = {setActiveNote}
        />
 
-       <Main activeNote = {getActiveNote()} onNoteUpdate={onNoteUpdate}/> 
+       <Main activeNote = {getActiveNote()}
+        onNoteUpdate={onNoteUpdate}/> 
     </div>
   );
 }
