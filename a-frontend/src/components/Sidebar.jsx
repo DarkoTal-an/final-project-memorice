@@ -1,8 +1,9 @@
 import React from 'react'
 
 const Sidebar = ({notes, onNoteAdd, onNoteDelete, activeNote, setActiveNote}) => {
-
+    //adding a sorting method to have the lastest note on top
     const sortedNotes = notes.sort((a, b) => b.lastModified - a.lastModified);
+
     return (
         <div className="notes__sidebar">
             <div className="notes__sidebar-header">
