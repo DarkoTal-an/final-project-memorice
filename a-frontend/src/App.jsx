@@ -1,8 +1,8 @@
 import React from 'react';
 import {useState, useEffect} from "react";
 import "./App.css";
-import Main from "./components/Main.jsx";
-import Sidebar from "./components/Sidebar.jsx";
+import Main from "./components/Notes/Main.jsx";
+import Sidebar from "./components/Notes/Sidebar.jsx";
 import uuid from "react-uuid";
 
 
