@@ -1,6 +1,10 @@
-import React from 'react'
+import React from 'react';
+import { useSelector } from 'react-redux';
 
 const Sidebar = ({notes, onNoteAdd, onNoteDelete, activeNote, setActiveNote}) => {
+
+    const posts = useSelector((state) => state.postReducer);
+    console.log(posts);
     //adding a sorting method to have the lastest note on top
     const sortedNotes = notes.sort((a, b) => b.lastModified - a.lastModified);
 

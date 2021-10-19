@@ -1,7 +1,10 @@
-import React from "react";
-// import ReactMarkdown from "react-markdown";
+import React, {useState} from "react";
+
 
 const Main = ({ activeNote, onNoteUpdate }) => {
+
+    // const [postData, setPostData] = useState();
+  
     const onEditInputField= (key, value) => {
         onNoteUpdate( {
             ...activeNote, // id 
@@ -17,13 +20,14 @@ const Main = ({ activeNote, onNoteUpdate }) => {
     <div className="notes__preview">
       <input
         type="text"
+        name="title"
         className="notes__title"
         value={activeNote.title} onChange={(e)=> onEditInputField("title", e.target.value)}
         placeholder="Title"
         autoFocus
       />
       <textarea
-        
+        name="body"
         className="notes__body"
         placeholder="Take notes here..."
         value={activeNote.body} onChange={(e)=> onEditInputField("body", e.target.value)}

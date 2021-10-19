@@ -5,8 +5,13 @@ import Main from "./components/Notes/Main.jsx";
 import Sidebar from "./components/Notes/Sidebar.jsx";
 import uuid from "react-uuid";
 
+import {useDispatch} from "react-redux";
+import {getAppPosts} from "./actions/postActions.js" // dispatching actions
 
-function App() {
+
+const App = () => {
+
+  const dispatch = useDispatch();
 
   const [notes, setNotes] = useState(
     localStorage.notes ? JSON.parse(localStorage.notes) : []
@@ -14,9 +19,9 @@ function App() {
   const [activeNote, setActiveNote] = useState(false); // activeNote is false there when notes are EMPTY...no activeNote!!! Main.jsx****
 
   useEffect(() => {
-    localStorage.setItem("notes",JSON.stringify(notes));
-
-  }, [notes]);
+    // localStorage.setItem("notes",JSON.stringify(notes));
+    dispatch(getAppPosts())   // firing in postActions
+  }, [dispatch]);
 
   const onNoteAdd = () => {
     const newNote = {
