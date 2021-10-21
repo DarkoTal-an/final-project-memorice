@@ -6,7 +6,7 @@ import AllLists from "./components/Lists/AllListsSidebar.jsx";
 // import uuid from "react-uuid";
 
 import {useDispatch} from "react-redux";
-import {createAppList, getAppLists} from "./actions/postActions.js" // dispatching actions
+import {createAppList, getAppLists, updateList, } from "./actions/postActions.js" // dispatching actions
 
 
 const App = () => {
@@ -27,18 +27,35 @@ const App = () => {
 
   const addListItemBtn = (e) => {
     e.preventDefault();
-    dispatch(createAppList(listData))
+    if(currentId) {
+      dispatch(updateList(currentId, listData))
+    }else {
+      dispatch(createAppList(listData))
+    }
+    clearing();
 }
 
-
+const clearing = () =>{
+  setCurrentId(null);
+  setListData({
+    title: "",
+    body: "",    
+     
+  })
+};
 
   return (
     <div className="App">
        <AllLists addListItemBtn={addListItemBtn}
+       setCurrentId={setCurrentId}
+       currentId={currentId}
      
        />
 
        <InputForm setListData={setListData} listData={listData}
+       setCurrentId={setCurrentId}
+       currentId={currentId}
+       
         /> 
     </div>
   );

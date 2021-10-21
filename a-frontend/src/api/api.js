@@ -11,10 +11,10 @@ export const fetchPosts = ()=> axios.get(url);
 //creating, sending to store and saving a new one
 export const createPost = (newPost)=> axios.post(url, newPost);
 
-export const updatePost = (id,updatePost)=> axios.patch(`${url}/${id}`, updatePost);
+export const updateList = (_id,updateList)=> axios.patch(`${url}/${_id}`, updateList);
 
 //delete API
-export const deleteAPost = (id)=> axios.delete(`${url}/${id}`);
+export const deleteAPost = (_id)=> axios.delete(`${url}/${_id}`);
 
 // //counting likes Api
 // export const countLikes = (id)=> axios.patch(`${url}/${id}/likepost`);

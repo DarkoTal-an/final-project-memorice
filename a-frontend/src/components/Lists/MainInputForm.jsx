@@ -1,20 +1,27 @@
-import React, {useState} from "react";
+import React, { useEffect} from "react";
+import { useSelector } from 'react-redux';
 
 
 
 
-const InputForm = ({listData, setListData}) => {
 
-    // const [listData, setListData] = useState({
-    //   title: "",
-    //   body: "",
-    //   lastModified: "",
-    // });
-  
-  
+const InputForm = ({listData, setListData, currentId}) => {
 
-    // inital activenote is "false" therefore we add this element
-    // if(! activeNote) return <div className="no-active-note">No note selected!</div>
+  const activeList = currentId;   
+    // const setActiveList = setCurrentId;
+
+  const listToUpdate = useSelector((state)=>
+   activeList? state.postReducer.find((aList) => aList._id === activeList) : null
+   )
+
+   useEffect(() => {
+     if(listToUpdate) {
+       setListData(listToUpdate)
+     }
+     
+   }, [listToUpdate])
+
+    // if(! activeList) return <div className="no-active-note">No note selected!</div>
 
   return (
     <div className="notes__preview">
@@ -25,6 +32,7 @@ const InputForm = ({listData, setListData}) => {
         value={listData.title} onChange={(e)=> setListData({...listData ,title: e.target.value})}
         placeholder="Title"
         autoFocus
+        required
       />
       <textarea
         name="body"
@@ -32,6 +40,7 @@ const InputForm = ({listData, setListData}) => {
         placeholder="Take notes here..."
         value={listData.body} onChange={(e)=> setListData({...listData ,body: e.target.value})}
         autoFocus
+        required
       ></textarea>
     </div>
   );

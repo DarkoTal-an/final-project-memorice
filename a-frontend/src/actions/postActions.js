@@ -22,3 +22,26 @@ export const createAppList= (post)=> async(dispatch) => {
         console.log(error.message);
     }
 }
+
+//updateinf/editing a list/note
+export const updateList= (_id, post)=> async(dispatch) => {
+    try {
+        const {data} = await api.updateList(_id, post);
+        dispatch({type: UPDATE, payload:data })
+    } catch (error) {
+        // console.log(error.message);
+        console.log("Client server conflict:",error.message);
+    }
+};
+
+//deleting a list regarding it's ID and
+
+export const deleteAListAction= (_id)=> async(dispatch) => {
+    try {
+        await api.deleteAPost(_id);
+        dispatch({type: DELETE, payload:_id})
+    } catch (error) {
+        // console.log(error.message);
+        console.log("Client server conflict:",error.message);
+    }
+};
