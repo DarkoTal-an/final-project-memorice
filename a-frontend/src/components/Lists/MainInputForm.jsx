@@ -1,5 +1,6 @@
 import React, { useEffect} from "react";
 import { useSelector } from 'react-redux';
+import "./notes.css";
 
 
 
@@ -16,7 +17,8 @@ const InputForm = ({listData, setListData, currentId}) => {
 
    useEffect(() => {
      if(listToUpdate) {
-       setListData(listToUpdate)
+       setListData(listToUpdate);
+       console.log("ListToUpdate:", listToUpdate);
      }
      
    }, [listToUpdate])
@@ -32,15 +34,17 @@ const InputForm = ({listData, setListData, currentId}) => {
         value={listData.title} onChange={(e)=> setListData({...listData ,title: e.target.value})}
         placeholder="Title"
         autoFocus
-        required
+        
+
       />
+      <p className = "errorMessage top-arrow" > </p>
       <textarea
         name="body"
         className="notes__body"
         placeholder="Take notes here..."
         value={listData.body} onChange={(e)=> setListData({...listData ,body: e.target.value})}
         autoFocus
-        required
+        
       ></textarea>
     </div>
   );

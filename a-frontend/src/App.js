@@ -1,12 +1,14 @@
 import React from 'react';
 import {useState, useEffect} from "react";
-import "./App.css";
+import {BrowserRouter as Router, Route, Switch} from "react-router-dom"
+
 import InputForm from "./components/Lists/MainInputForm.jsx";
 import AllLists from "./components/Lists/AllListsSidebar.jsx";
-// import uuid from "react-uuid";
+import Footer from "./components/Footer/Footer.jsx";
 
 import {useDispatch} from "react-redux";
-import {createAppList, getAppLists, updateList, } from "./actions/postActions.js" // dispatching actions
+import {createAppList, getAppLists, updateList} from "./actions/postActions.js" // dispatching actions
+import Navbar from './components/Navbar/Navbar.jsx';
 
 
 const App = () => {
@@ -14,6 +16,7 @@ const App = () => {
     title: "",
     body: "",
     lastModified: "",
+    
   });
 
   const [currentId, setCurrentId] = useState(null);
@@ -28,36 +31,55 @@ const App = () => {
   const addListItemBtn = (e) => {
     e.preventDefault();
     if(currentId) {
-      dispatch(updateList(currentId, listData))
-    }else {
-      dispatch(createAppList(listData))
+      dispatch(updateList(currentId, listData));
+    }else if(inputFieldValidation()) {
+      dispatch(createAppList(listData));
     }
-    clearing();
+    clearing(); 
 }
 
+ const inputFieldValidation = () =>{
+    
+    if (! currentId && listData.title === "") {
+      document.getElementsByClassName( "errorMessage" )[0].style.visibility = "visible";
+      document.getElementsByClassName( "errorMessage" )[0].innerHTML = "Please Fill out this field";
+      
+      return false;
+      } 
+      return true;
+    
+  }
+
 const clearing = () =>{
-  setCurrentId(null);
+  setCurrentId(null);  
   setListData({
     title: "",
-    body: "",    
-     
-  })
+    body: "",      
+  });
 };
 
-  return (
-    <div className="App">
-       <AllLists addListItemBtn={addListItemBtn}
-       setCurrentId={setCurrentId}
-       currentId={currentId}
-     
-       />
+ 
 
-       <InputForm setListData={setListData} listData={listData}
-       setCurrentId={setCurrentId}
-       currentId={currentId}
-       
-        /> 
-    </div>
+
+
+  return (
+  
+    <div className=".container">
+      <Navbar />
+      <div className="notes">        
+         <AllLists addListItemBtn={addListItemBtn}
+         setCurrentId={setCurrentId}
+         currentId={currentId}
+         setListData={setListData} listData={listData}
+         />
+         <InputForm setListData={setListData} listData={listData}
+         setCurrentId={setCurrentId}
+         currentId={currentId}
+          />
+      </div>        
+      <Footer />
+     </div>
+    
   );
 }
 

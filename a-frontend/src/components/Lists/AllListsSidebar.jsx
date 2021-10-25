@@ -5,7 +5,7 @@ import { deleteAListAction } from '../../actions/postActions';
 
 
 
-const AllLists = ({addListItemBtn, currentId, setCurrentId }) => {
+const AllLists = ({addListItemBtn, currentId, setCurrentId, setListData }) => {
 
     const activeList = currentId;   
     const setActiveList = setCurrentId;   
@@ -19,10 +19,13 @@ const AllLists = ({addListItemBtn, currentId, setCurrentId }) => {
     const sortedLists = lists.sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt));
     
    
-    const onListDelete =(_id)=> {       
-       dispatch(deleteAListAction(_id))
-   }
-
+    const onListDelete =(e,_id)=> {    
+         e.stopPropagation();       
+        dispatch(deleteAListAction(_id));
+        
+        // window.location.reload();
+    }
+      
 
 
     return (
@@ -32,12 +35,12 @@ const AllLists = ({addListItemBtn, currentId, setCurrentId }) => {
                 <button type="button" className="notes__add" onClick={addListItemBtn} >{currentId? `Edit this Note`:`Add a new Note`}</button>
             </div>      
             <div className="notes__list">
-                {sortedLists.map((list)=> {                    
+                {sortedLists.map((list, index)=> {                    
                     return (
-                        <div onClick={()=> setActiveList(list._id)} className={`notes__list-item ${list._id ===activeList && "notes__list-item--selected" } `}>
+                        <div key={index} onClick={()=> setActiveList(list._id)} className={`notes__list-item ${list._id ===activeList && "notes__list-item--selected" } `}>
                     <div className="notes__small-title">
                     <h5>{list.title}</h5>
-                    <button type="button" className="notes__delete" onClick={()=> onListDelete(list._id)}>X</button>
+                    <button className="notes__delete" onClick={(e)=> onListDelete(e,list._id)}>X</button>
                     </div>
                     <div className="notes__small-body">
                         <p>{list.body}</p>
