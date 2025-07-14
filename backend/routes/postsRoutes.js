@@ -6,7 +6,7 @@ const router = express.Router();
 
 //http://localhost:5000/post
 router.get("/", getAllNotes);
-router.post("/", createPost);
+router.post("/", createPost); // we go to controllers to find methods
 
 //updateing only the part of the item 
 router.patch("/:id", updateThePost);
